@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ASTERION Concord α — Партнёрский портал</title>
+  <meta name="description" content="Портал для партнёров ASTERION Concord α: уровни, привилегии, команды и обратная связь." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#090b10;
+      --bg2:#0d1018;
+      --accent1:#7c5cff;
+      --accent2:#3dd6ff;
+      --accent3:#ffae42;
+      --text:#d8def8;
+      --muted:#8fa3c8;
+      --radius:18px;
+      --border:1px solid rgba(255,255,255,.06);
+      --shadow:0 8px 30px rgba(0,0,0,.35);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;}
+    body{
+      font-family:'Inter',sans-serif;
+      background:radial-gradient(1200px 700px at 80% -10%, rgba(124,92,255,.15), transparent 60%),
+                 radial-gradient(900px 500px at 10% 10%, rgba(61,214,255,.12), transparent 60%),
+                 linear-gradient(180deg,var(--bg1),var(--bg2));
+      color:var(--text);
+      line-height:1.6;
+      overflow-x:hidden;
+    }
+
+    .container{max-width:1180px;margin:0 auto;padding:32px 20px;}
+
+    header.hero{padding:64px 0 32px;text-align:center;border-bottom:var(--border);}
+    header.hero h1{font-weight:800;font-size:clamp(28px,3vw,40px);background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+    header.hero p{color:var(--muted);margin-top:10px;}
+
+    main{padding:50px 0;}
+    section{margin-bottom:80px;}
+
+    h2{font-size:1.8rem;margin-bottom:18px;border-left:4px solid var(--accent2);padding-left:10px;}
+
+    /* LEVELS */
+    .levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:28px;}
+    .card{position:relative;background:rgba(255,255,255,.02);border:var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);transition:all 0.35s ease;cursor:pointer;}
+    .card::before{content:"";position:absolute;inset:-2px;border-radius:inherit;background:linear-gradient(135deg,rgba(124,92,255,.25),rgba(61,214,255,.12));z-index:-1;filter:blur(14px);transition:opacity 0.4s ease;opacity:0;}
+    .card:hover::before{opacity:1;}
+    .card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.45);}
+    .badge{display:inline-block;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.06);border:var(--border);color:var(--muted);font-weight:600;margin-bottom:10px;}
+    .card h3{margin-bottom:8px;}
+    .pts{color:var(--muted);font-weight:600;margin-bottom:10px;}
+    .perk-list{margin:10px 0 0 18px;}
+    .perk-list li{margin:6px 0;}
+
+    /* COMMANDS */
+    .command-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;}
+    .panel{background:rgba(255,255,255,.03);border:var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);transition:all 0.3s ease;}
+    .panel:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.4);}
+    .panel h3{margin-bottom:8px;}
+    .kbd{display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:2px 8px;font-family:monospace;font-size:.9rem;color:var(--accent2);}
+
+    footer{text-align:center;padding:40px 0;border-top:var(--border);color:var(--muted);background:rgba(0,0,0,.3);backdrop-filter:blur(8px);}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <h1>ASTERION Concord α</h1>
+      <p>Партнёрский портал: уровни, привилегии, команды и обратная связь</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <section id="levels">
+        <h2>Уровни партнёрства</h2>
+        <div class="levels">
+          <div class="card">
+            <span class="badge">LV.1 • Соратник</span>
+            <h3>Нарёкшийся другом</h3>
+            <div class="pts">Порог: <span class="kbd">8 000 pts</span></div>
+            <ul class="perk-list">
+              <li>Доступ к партнёрскому ивент-хабу ASTERION.</li>
+              <li>Проведение ивентов, конкурсов и розыгрышей.</li>
+              <li>Размещение ссылок и ресурсов в партнёрских каналах.</li>
+              <li>Карточка с прогрессом (уровень, PTS, проценты).</li>
+              <li>Бонусы за активность сообщества на ASTERION.</li>
+              <li>Обработка заявок — до 48 часов.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <span class="badge">LV.2 • Клеврет</span>
+            <h3>Верный товарищ</h3>
+            <div class="pts">Порог: <span class="kbd">20 000 pts</span> • Множитель: <span class="kbd">×1.25</span></div>
+            <ul class="perk-list">
+              <li>Приоритетная поддержка и обратная связь.</li>
+              <li>Приватные каналы и созвоны для партнёров.</li>
+              <li>Индивидуальные PTS-бусты по запросу куратора.</li>
+              <li>Коллаборативные посты и упоминания в медиа ASTERION.</li>
+              <li>Ранний доступ к тестам и обновлениям.</li>
+              <li>Кастомный множитель по согласованию.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <span class="badge">LV.3 • В завязке</span>
+            <h3>Брат по делу</h3>
+            <div class="pts">Порог: <span class="kbd">40 000 pts</span> • Пассив: <span class="kbd">×1.5</span></div>
+            <ul class="perk-list">
+              <li>Платиновая безопасность и защита от ложных банов.</li>
+              <li>Ежемесячные PTS-бустеры (10× при ивентах/апдейтах).</li>
+              <li>Участие в тестах продуктов ASTERION.</li>
+              <li>Помощь в брендинге и оформлении сервера.</li>
+              <li>Эксклюзивные материалы, аналитика и отчёты.</li>
+              <li>Доступ к встречам ASTERION Council.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="commands">
+        <h2>Команды</h2>
+        <div class="command-grid">
+          <div class="panel">
+            <h3>Основные</h3>
+            <p><span class="kbd">/partner_me</span> — Показ твоей карточки и уровня</p>
+            <p><span class="kbd">/partner_info name:&quot;ServerName&quot;</span> — Инфо о партнёре</p>
+            <p><span class="kbd">/partner_leaderboard</span> — Топ-10 партнёров</p>
+          </div>
+          <div class="panel">
+            <h3>Обратная связь</h3>
+            <p><span class="kbd">/feedback message:&quot;Текст&quot;</span> — Отправка отзыва</p>
+            <p>Репорты попадают в канал <span class="kbd">#partners-feedback</span></p>
+          </div>
+          <div class="panel">
+            <h3>Представители</h3>
+            <p><span class="kbd">/partner_addrep</span> — Добавить представителя</p>
+            <p><span class="kbd">/partner_reps</span> — Показать всех представителей</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>© ASTERION Concord α · Партнёрская экосистема</footer>
+</body>
+</html>
