@@ -3,7 +3,7 @@ name: 🚀 Deploy ASTERION Concord α Site
 on:
   push:
     branches:
-      - main
+      - BedwarsLeaderboard
   workflow_dispatch:
 
 permissions:
