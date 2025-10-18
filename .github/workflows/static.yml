@@ -3,8 +3,8 @@ name: 🚀 Deploy ASTERION Concord α Site
 on:
   push:
     branches:
-      - BedwarsLeaderboard
-  workflow_dispatch:
+      - BedwarsLeaderboard  # если основная ветка называется иначе — укажи её (например, master)
+  workflow_dispatch: # позволяет запускать вручную из вкладки Actions
 
 permissions:
   contents: read
@@ -31,7 +31,7 @@ jobs:
       - name: 📦 Upload site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .  # тут должен лежать index.html
+          path: .  # корневая папка, где лежит index.html
 
       - name: 🚀 Deploy to GitHub Pages
         id: deployment
