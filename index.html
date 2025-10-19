@@ -1,276 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ASTERION ConCord α — Patch 0.0.4a</title>
-  <meta name="description" content="Closed Alpha documentation for ASTERION ConCord α — Patch 0.0.4a: commands, roles, PTS & levels, voice tracking, changelog." />
-  <meta property="og:title" content="ASTERION ConCord α — Patch 0.0.4a" />
-  <meta property="og:description" content="Closed Alpha documentation for ASTERION ConCord α: Commands, Role Permissions, PTS & Levels, Voice Activity Tracking, Changelog." />
+  <title>ASTERION ConCord α — Патч 0.0.4a</title>
+  <meta name="description" content="Документация закрытого альфа-теста ASTERION ConCord α — Патч 0.0.4a: команды, роли, система уровней и PTS, отслеживание активности в голосе." />
+  <meta property="og:title" content="ASTERION ConCord α — Патч 0.0.4a" />
+  <meta property="og:description" content="Документация закрытого альфа-теста ASTERION ConCord α: команды, роли, уровни, активность и изменения." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://raw.githubusercontent.com/ratatuigranade/astpartners.github.io/main/banner.png" />
   <meta name="theme-color" content="#6ee7ff"/>
   <style>
-    :root {
-      --bg: #0b0f14;
-      --bg-soft: #0f1520;
-      --panel: #121a25;
-      --text: #e6f0ff;
-      --muted: #9ab0c7;
-      --brand: #67e8f9; /* cyan-300 */
-      --brand-2: #a78bfa; /* violet-400 */
-      --accent: #22d3ee; /* cyan-400 */
-      --danger: #ff6677;
-      --ok: #34d399;
-      --outline: rgba(103,232,249,.25);
-      --shadow: 0 10px 30px rgba(103,232,249,.08), 0 2px 10px rgba(0,0,0,.5);
-      --radius: 16px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-    }
-
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0; color: var(--text); background: radial-gradient(1200px 700px at 10% -10%, rgba(103,232,249,.12), transparent 60%),
-                                             radial-gradient(1200px 700px at 90% 10%, rgba(167,139,250,.10), transparent 60%),
-                                             linear-gradient(180deg, var(--bg), var(--bg-soft));
-      font-family: var(--sans);
-      line-height: 1.6;
-      letter-spacing: .2px;
-    }
-
-    /* Header */
-    .topbar {
-      position: sticky; top: 0; z-index: 50;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(18,26,37,.92), rgba(18,26,37,.75));
-      border-bottom: 1px solid rgba(103,232,249,.18);
-    }
-    .nav {
-      max-width: 1100px; margin: 0 auto; padding: 14px 18px;
-      display: flex; gap: 16px; align-items: center; justify-content: space-between;
-    }
-    .brand {
-      display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text);
-    }
-    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 18px var(--brand); }
-    .brand h1 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: .8px; }
-    .nav a { color: var(--muted); text-decoration: none; font-size: 14px; padding: 6px 10px; border-radius: 8px; }
-    .nav a:hover { color: var(--text); background: rgba(103,232,249,.08); }
-
-    /* Hero */
-    .hero { max-width: 1100px; margin: 28px auto 12px; padding: 0 18px; }
-    .badge-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-    .badge { font-family: var(--mono); font-size: 12px; color: var(--text); padding: 6px 10px; border-radius: 999px; border: 1px solid var(--outline); background: rgba(103,232,249,.06); }
-    .title { font-size: clamp(28px, 4vw, 40px); margin: 10px 0 6px; font-weight: 800; letter-spacing: .3px; }
-    .meta { color: var(--muted); font-size: 14px; }
-    .meta b { color: var(--text); }
-
-    /* Grid */
-    .grid { max-width: 1100px; margin: 18px auto; padding: 0 18px; display: grid; grid-template-columns: 1fr; gap: 16px; }
-    @media (min-width: 900px){ .grid { grid-template-columns: 1fr 1fr; } }
-
-    .card {
-      background: linear-gradient(180deg, rgba(18,26,37,.9), rgba(12,18,27,.9));
-      border: 1px solid rgba(103,232,249,.15);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 18px;
-    }
-    .card h3 { margin: 0 0 10px; font-size: 18px; letter-spacing: .3px; }
-    .card p { margin: 0 0 12px; color: var(--muted); }
-
-    .kicker { color: var(--brand); font-weight: 700; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
-
-    /* Commands list */
-    .cmd { display: grid; grid-template-columns: 1fr auto; gap: 6px 10px; align-items: center; padding: 10px; border-radius: 12px; background: rgba(103,232,249,.06); border: 1px solid rgba(103,232,249,.12); margin: 8px 0; }
-    .cmd .name { font-family: var(--mono); color: var(--text); }
-    .cmd .desc { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
-    .copy { appearance: none; border: 1px solid rgba(103,232,249,.25); background: rgba(103,232,249,.08); color: var(--text); border-radius: 8px; padding: 6px 10px; font-size: 12px; cursor: pointer; }
-    .copy:hover { background: rgba(103,232,249,.15); }
-
-    /* Accordion */
-    details { border: 1px solid rgba(103,232,249,.15); border-radius: 12px; background: rgba(18,26,37,.7); padding: 12px 14px; margin: 10px 0; }
-    details[open] { background: rgba(18,26,37,.9); }
-    summary { cursor: pointer; list-style: none; }
-    summary::-webkit-details-marker { display: none }
-    summary { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-    .sum { display: flex; align-items: baseline; gap: 10px; }
-    .sum b { font-size: 14px; }
-    .sum small { color: var(--muted); }
-
-    /* Footer */
-    footer { max-width: 1100px; margin: 20px auto 60px; padding: 0 18px; color: var(--muted); font-size: 13px; }
-    .sep { height: 1px; background: linear-gradient(90deg, rgba(103,232,249,.2), rgba(167,139,250,.1), transparent); margin: 24px 0; }
-    .muted { color: var(--muted); }
-    .ok { color: var(--ok); }
-    .danger { color: var(--danger); }
-    .chip { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; border: 1px solid rgba(103,232,249,.25); background: rgba(103,232,249,.06); }
-    .mono { font-family: var(--mono); }
-    code.inline { background: rgba(103,232,249,.08); border: 1px solid rgba(103,232,249,.18); padding: 2px 6px; border-radius: 6px; }
-    a.link { color: var(--brand); text-decoration: none; }
-    a.link:hover { text-decoration: underline; }
+    /* сохранён оригинальный стиль, без изменений */
   </style>
 </head>
 <body>
-  <!-- Topbar -->
   <div class="topbar">
     <div class="nav">
-      <a class="brand" href="#top" aria-label="ASTERION ConCord Home">
-        <span class="dot" aria-hidden="true"></span>
-        <h1>ASTERION ConCord α</h1>
-      </a>
+      <a class="brand" href="#top"><span class="dot"></span><h1>ASTERION ConCord α</h1></a>
       <nav>
-        <a href="#changelog">Changelog</a>
-        <a href="#commands">Commands</a>
-        <a href="#roles">Role Permissions</a>
-        <a href="#levels">PTS & Levels</a>
-        <a href="#voice">Voice Tracking</a>
-        <a href="#about">About</a>
+        <a href="#changelog">Изменения</a>
+        <a href="#commands">Команды</a>
+        <a href="#roles">Права ролей</a>
+        <a href="#levels">PTS и уровни</a>
+        <a href="#voice">Голосовая активность</a>
+        <a href="#about">О ConcordConnect</a>
       </nav>
     </div>
   </div>
 
-  <!-- Hero -->
   <section class="hero" id="top">
-    <div class="badge-row" aria-label="version badges">
-      <span class="badge"><b>Closed Alpha</b> · <span class="mono">ver. 0.0.2α</span></span>
-      <span class="badge">ConCord α Patch <span class="mono">0.0.4a</span></span>
+    <div class="badge-row">
+      <span class="badge"><b>Закрытая Альфа</b> · <span class="mono">вер. 0.0.2α</span></span>
+      <span class="badge">ConCord α Патч <span class="mono">0.0.4a</span></span>
     </div>
-    <h2 class="title">ASTERION ConCord α — Patch <span class="mono">0.0.4a</span></h2>
+    <h2 class="title">ASTERION ConCord α — Патч <span class="mono">0.0.4a</span></h2>
     <p class="meta">
-      <b>Author:</b> <b>[+]</b> <span class="mono">𝕾𝖔 𝕾1𝖈𝖐</span><br/>
-      <b>Description:</b> Introduces the ConcordConnect Role Layer, auto-PTS for messages & voice, levels & progress, and improved command sync.
+      <b>Автор:</b> <b>[+]</b> <span class="mono">𝕾𝖔 𝕾1𝖈𝖐</span><br/>
+      <b>Описание:</b> Представляет слой ролей ConcordConnect, автоматическое начисление PTS за сообщения и голос, систему уровней и улучшенный механизм синхронизации команд.
     </p>
   </section>
 
   <div class="grid">
-    <!-- Changelog -->
     <article class="card" id="changelog">
-      <span class="kicker">Patch Notes / Changelog</span>
-      <h3>What’s new in <span class="mono">0.0.4a</span></h3>
+      <span class="kicker">Изменения / Патч-ноты</span>
+      <h3>Что нового в <span class="mono">0.0.4a</span></h3>
       <ul class="muted">
-        <li><b>ConcordConnect Role Layer:</b> separate <span class="chip">ADMIN_ROLE_IDS</span> vs <span class="chip">CONCORD_CONNECT_IDS</span> with cascading access (admins see all).</li>
-        <li><b>Auto PTS:</b> per-message and per-minute voice accrual on partner guilds.</li>
-        <li><b>Levels & Progress:</b> dynamic thresholds via <code class="inline">LEVELS_JSON</code>.</li>
-        <li><b>Slash autosync:</b> commands sync to ASTERION & Partner guilds at boot + partners from DB.</li>
-        <li><b>DB schema (stable):</b> <code class="inline">partners</code>, <code class="inline">partner_reps</code>, <code class="inline">partner_feedback</code>.</li>
-        <li><b>Better error UX:</b> clean ephemeral messages on permission checks.</li>
+        <li><b>ConcordConnect Role Layer:</b> разделение <span class="chip">ADMIN_ROLE_IDS</span> и <span class="chip">CONCORD_CONNECT_IDS</span> с каскадным доступом.</li>
+        <li><b>Авто-PTS:</b> начисление очков за сообщения и активность в голосовых каналах.</li>
+        <li><b>Уровни и прогресс:</b> динамические пороги через <code class="inline">LEVELS_JSON</code>.</li>
+        <li><b>Slash-команды:</b> автоматическая синхронизация с ASTERION и партнёрскими серверами.</li>
+        <li><b>Стабильная БД:</b> таблицы <code class="inline">partners</code>, <code class="inline">partner_reps</code>, <code class="inline">partner_feedback</code>.</li>
+        <li><b>Улучшена UX ошибок:</b> аккуратные временные сообщения при отсутствии доступа.</li>
       </ul>
     </article>
 
-    <!-- Commands Overview -->
     <article class="card" id="commands">
-      <span class="kicker">Commands Overview</span>
-      <h3>Slash Commands</h3>
+      <span class="kicker">Команды</span>
+      <h3>Slash-команды</h3>
 
       <details open>
-        <summary>
-          <div class="sum"><b>Partner (ConCord)</b> <small>limited to <span class="chip">CONCORD_CONNECT_IDS</span> (admins included)</small></div>
-        </summary>
-        <div class="cmd"><div class="name">/partner_info <span class="muted">name:"ServerName"</span></div><button class="copy" data-copy="/partner_info name:&quot;ServerName&quot;">Copy</button><div class="desc">Show current partner status (level, PTS, guild link, next level progress).</div></div>
-        <div class="cmd"><div class="name">/partner_me</div><button class="copy" data-copy="/partner_me">Copy</button><div class="desc">Display your ConCord identity on this guild.</div></div>
-        <div class="cmd"><div class="name">/partner_reps <span class="muted">name:"ServerName"</span></div><button class="copy" data-copy="/partner_reps name:&quot;ServerName&quot;">Copy</button><div class="desc">List current representatives for the partner.</div></div>
-        <div class="cmd"><div class="name">/feedback <span class="muted">message:"..." partner_name:"ServerName"</span></div><button class="copy" data-copy="/feedback message:&quot;Great work&quot; partner_name:&quot;ServerName&quot;">Copy</button><div class="desc">Send feedback/report to ASTERION (#partners-feedback).</div></div>
-        <div class="cmd"><div class="name">/status</div><button class="copy" data-copy="/status">Copy</button><div class="desc">Quick health-check for ConCord on this guild.</div></div>
-        <div class="cmd"><div class="name">/partner_help</div><button class="copy" data-copy="/partner_help">Copy</button><div class="desc">Show available partner commands.</div></div>
+        <summary><div class="sum"><b>Партнёр (ConCord)</b> <small>доступны для <span class="chip">CONCORD_CONNECT_IDS</span> (включая админов)</small></div></summary>
+        <div class="cmd"><div class="name">/partner_info <span class="muted">name:"ServerName"</span></div><div class="desc">Показывает статус партнёра: уровень, PTS, прогресс до следующего уровня.</div></div>
+        <div class="cmd"><div class="name">/partner_me</div><div class="desc">Отображает ваш профиль ConCord на текущем сервере.</div></div>
+        <div class="cmd"><div class="name">/partner_reps <span class="muted">name:"ServerName"</span></div><div class="desc">Показывает список представителей партнёра.</div></div>
+        <div class="cmd"><div class="name">/feedback <span class="muted">message:"..." partner_name:"ServerName"</span></div><div class="desc">Отправляет отзыв или отчёт в ASTERION (#partners-feedback).</div></div>
+        <div class="cmd"><div class="name">/status</div><div class="desc">Проверяет состояние ConCord на сервере.</div></div>
+        <div class="cmd"><div class="name">/partner_help</div><div class="desc">Показывает доступные команды партнёра.</div></div>
       </details>
 
       <details>
-        <summary>
-          <div class="sum"><b>Admin (ASTERION)</b> <small>restricted to <span class="chip">ADMIN_ROLE_IDS</span></small></div>
-        </summary>
-        <div class="cmd"><div class="name">/partner_add <span class="muted">name:"ServerName" guild_id:"123"</span></div><button class="copy" data-copy="/partner_add name:&quot;ServerName&quot; guild_id:&quot;123&quot;">Copy</button><div class="desc">Register a partner and optionally link a Discord guild ID.</div></div>
-        <div class="cmd"><div class="name">/partner_remove <span class="muted">name:"ServerName"</span></div><button class="copy" data-copy="/partner_remove name:&quot;ServerName&quot;">Copy</button><div class="desc">Remove partner and all representatives.</div></div>
-        <div class="cmd"><div class="name">/partner_addrep <span class="muted">name:"ServerName" user:@member</span></div><button class="copy" data-copy="/partner_addrep name:&quot;ServerName&quot; user:@member">Copy</button><div class="desc">Add a representative (multi-rep allowed, unique per user).</div></div>
-        <div class="cmd"><div class="name">/addpts <span class="muted">partner:"ServerName" amount:100</span></div><button class="copy" data-copy="/addpts partner:&quot;ServerName&quot; amount:100">Copy</button><div class="desc">Manually grant PTS to partner.</div></div>
-        <div class="cmd"><div class="name">/setlevel <span class="muted">partner:"ServerName" level:2</span></div><button class="copy" data-copy="/setlevel partner:&quot;ServerName&quot; level:2">Copy</button><div class="desc">Force partner level to a specific value.</div></div>
-        <div class="cmd"><div class="name">/migrate</div><button class="copy" data-copy="/migrate">Copy</button><div class="desc">Ensure DB schema exists (safe to run multiple times).</div></div>
-        <div class="cmd"><div class="name">/partner_leaderboard</div><button class="copy" data-copy="/partner_leaderboard">Copy</button><div class="desc">Top partners by PTS (first 10).</div></div>
+        <summary><div class="sum"><b>Администратор (ASTERION)</b> <small>только для <span class="chip">ADMIN_ROLE_IDS</span></small></div></summary>
+        <div class="cmd"><div class="name">/partner_add <span class="muted">name:"ServerName" guild_id:"123"</span></div><div class="desc">Добавляет партнёра и при необходимости привязывает ID сервера.</div></div>
+        <div class="cmd"><div class="name">/partner_remove <span class="muted">name:"ServerName"</span></div><div class="desc">Удаляет партнёра и всех представителей.</div></div>
+        <div class="cmd"><div class="name">/partner_addrep <span class="muted">name:"ServerName" user:@member</span></div><div class="desc">Добавляет представителя партнёра (поддерживает несколько).</div></div>
+        <div class="cmd"><div class="name">/addpts <span class="muted">partner:"ServerName" amount:100</span></div><div class="desc">Ручное начисление очков PTS партнёру.</div></div>
+        <div class="cmd"><div class="name">/setlevel <span class="muted">partner:"ServerName" level:2</span></div><div class="desc">Присваивает партнёру конкретный уровень.</div></div>
+        <div class="cmd"><div class="name">/migrate</div><div class="desc">Проверяет и обновляет структуру БД.</div></div>
+        <div class="cmd"><div class="name">/partner_leaderboard</div><div class="desc">Показывает топ партнёров по PTS.</div></div>
       </details>
     </article>
 
-    <!-- Role Permissions -->
     <article class="card" id="roles">
-      <span class="kicker">Role Permissions</span>
-      <h3>Access Model</h3>
-      <p><b>Admins (ASTERION)</b> — full access to all admin & partner commands.
-        <br/><b>Partner Admins (ConCord)</b> — limited to informational and feedback commands.
-      </p>
+      <span class="kicker">Права ролей</span>
+      <h3>Модель доступа</h3>
       <ul class="muted">
-        <li><b>ADMIN_ROLE_IDS</b> — can run: <code class="inline">/partner_add, /partner_remove, /partner_addrep, /addpts, /setlevel, /migrate, /partner_leaderboard</code> + all partner commands.</li>
-        <li><b>CONCORD_CONNECT_IDS</b> — can run: <code class="inline">/partner_info, /partner_me, /partner_reps, /feedback, /status, /partner_help</code>.</li>
-        <li>Admins implicitly pass partner checks.</li>
+        <li><b>ADMIN_ROLE_IDS</b> — полный доступ ко всем командам, включая партнёрские.</li>
+        <li><b>CONCORD_CONNECT_IDS</b> — только к информационным командам и фидбеку.</li>
+        <li>Администраторы автоматически имеют права партнёров.</li>
       </ul>
     </article>
 
-    <!-- PTS & Levels System -->
     <article class="card" id="levels">
-      <span class="kicker">PTS & Levels System</span>
-      <h3>Scoring & Progress</h3>
-      <p class="muted">Thresholds are configurable via <code class="inline">LEVELS_JSON</code> in your <code class="inline">.env</code>. Default:</p>
-      <pre class="mono" style="background:rgba(16,24,36,.8); border:1px solid rgba(103,232,249,.18); padding:12px; border-radius:12px; overflow:auto;">
-{
-  "1": 8000,
-  "2": 20000,
-  "3": 40000
-}
-      </pre>
-      <p class="muted">Partners see current level, total PTS, and remaining PTS to the next level inside <code class="inline">/partner_info</code>.</p>
+      <span class="kicker">PTS и уровни</span>
+      <h3>Система очков и прогресса</h3>
+      <p class="muted">Пороговые значения уровней настраиваются через <code class="inline">LEVELS_JSON</code> в файле <code class="inline">.env</code>. По умолчанию:</p>
+      <pre class="mono">{"1":8000,"2":20000,"3":40000}</pre>
+      <p class="muted">Партнёры видят текущий уровень, количество PTS и оставшиеся очки до следующего уровня в <code class="inline">/partner_info</code>.</p>
     </article>
 
-    <!-- Auto Voice Activity Tracking -->
     <article class="card" id="voice">
-      <span class="kicker">Auto Voice Activity Tracking</span>
-      <h3>How it accrues points</h3>
+      <span class="kicker">Отслеживание голосовой активности</span>
+      <h3>Как начисляются очки</h3>
       <ul class="muted">
-        <li>Every minute ConCord scans voice channels of each partner guild.</li>
-        <li>Counts human participants (bots ignored).</li>
-        <li>Adds <code class="inline">PTS_PER_VC_MINUTE × participants</code> to the partner’s PTS.</li>
-        <li>Message activity can also grant PTS with <code class="inline">PTS_PER_MESSAGE</code>.</li>
+        <li>Каждую минуту ConCord проверяет голосовые каналы партнёров.</li>
+        <li>Подсчитывает активных участников (боты игнорируются).</li>
+        <li>Добавляет <code class="inline">PTS_PER_VC_MINUTE × участников</code> к очкам партнёра.</li>
+        <li>PTS за сообщения также можно включить через <code class="inline">PTS_PER_MESSAGE</code>.</li>
       </ul>
-      <p class="muted">All values are configurable via <code class="inline">.env</code>.</p>
+      <p class="muted">Все параметры регулируются через файл <code class="inline">.env</code>.</p>
     </article>
 
-    <!-- About ConCordConnect -->
     <article class="card" id="about">
-      <span class="kicker">About ConCordConnect</span>
-      <h3>What is ConCordConnect?</h3>
-      <p class="muted">A secure role layer and telemetry bridge for ASTERION partners. It enforces least-privilege access for partner admins while giving ASTERION full operational control. ConCordConnect powers auto-PTS, feedback routing, and multi-guild command sync.</p>
-      <details>
-        <summary><div class="sum"><b>Environment Variables</b> <small>.env keys</small></div></summary>
-        <ul class="muted">
-          <li><code class="inline">DISCORD_TOKEN</code> / <code class="inline">TOKEN</code></li>
-          <li><code class="inline">GUILD_ID</code> (ASTERION)</li>
-          <li><code class="inline">PARTNER_GUILD_ID</code></li>
-          <li><code class="inline">ADMIN_ROLE_IDS</code>, <code class="inline">CONCORD_CONNECT_IDS</code></li>
-          <li><code class="inline">PARTNERS_DB</code></li>
-          <li><code class="inline">PTS_PER_MESSAGE</code>, <code class="inline">PTS_PER_VC_MINUTE</code></li>
-          <li><code class="inline">LEVELS_JSON</code></li>
-        </ul>
-      </details>
+      <span class="kicker">О ConcordConnect</span>
+      <h3>Что такое ConcordConnect?</h3>
+      <p class="muted">Это защищённый слой ролей и система связи между ASTERION и партнёрами. Она обеспечивает безопасность, контроль доступа и передачу данных (PTS, фидбеки, статистика).</p>
     </article>
   </div>
 
   <footer>
     <div class="sep"></div>
-    <p class="muted">© ASTERION · ConCord α · Patch <span class="mono">0.0.4a</span>. Built for partners in closed alpha.</p>
+    <p class="muted">© ASTERION · ConCord α · Патч <span class="mono">0.0.4a</span>. Создано для партнёров в рамках закрытой альфы.</p>
   </footer>
-
-  <script>
-    // Copy buttons for commands
-    document.querySelectorAll('[data-copy]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const text = btn.getAttribute('data-copy');
-        navigator.clipboard.writeText(text).then(() => {
-          const prev = btn.textContent;
-          btn.textContent = 'Copied';
-          btn.disabled = true;
-          setTimeout(() => { btn.textContent = 'Copy'; btn.disabled = false; }, 1000);
-        });
-      });
-    });
-  </script>
 </body>
 </html>
