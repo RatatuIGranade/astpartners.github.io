@@ -1,152 +1,276 @@
-<!doctype html>
-<html lang="ru">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ASTERION Concord α — Партнёрский портал</title>
-  <meta name="description" content="Портал для партнёров ASTERION Concord α: уровни, привилегии, команды и обратная связь." />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <title>ASTERION ConCord α — Patch 0.0.4a</title>
+  <meta name="description" content="Closed Alpha documentation for ASTERION ConCord α — Patch 0.0.4a: commands, roles, PTS & levels, voice tracking, changelog." />
+  <meta property="og:title" content="ASTERION ConCord α — Patch 0.0.4a" />
+  <meta property="og:description" content="Closed Alpha documentation for ASTERION ConCord α: Commands, Role Permissions, PTS & Levels, Voice Activity Tracking, Changelog." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/ratatuigranade/astpartners.github.io/main/banner.png" />
+  <meta name="theme-color" content="#6ee7ff"/>
   <style>
-    :root{
-      --bg1:#090b10;
-      --bg2:#0d1018;
-      --accent1:#7c5cff;
-      --accent2:#3dd6ff;
-      --accent3:#ffae42;
-      --text:#d8def8;
-      --muted:#8fa3c8;
-      --radius:18px;
-      --border:1px solid rgba(255,255,255,.06);
-      --shadow:0 8px 30px rgba(0,0,0,.35);
+    :root {
+      --bg: #0b0f14;
+      --bg-soft: #0f1520;
+      --panel: #121a25;
+      --text: #e6f0ff;
+      --muted: #9ab0c7;
+      --brand: #67e8f9; /* cyan-300 */
+      --brand-2: #a78bfa; /* violet-400 */
+      --accent: #22d3ee; /* cyan-400 */
+      --danger: #ff6677;
+      --ok: #34d399;
+      --outline: rgba(103,232,249,.25);
+      --shadow: 0 10px 30px rgba(103,232,249,.08), 0 2px 10px rgba(0,0,0,.5);
+      --radius: 16px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
     }
 
-    *{box-sizing:border-box;margin:0;padding:0;}
-    html,body{height:100%;}
-    body{
-      font-family:'Inter',sans-serif;
-      background:radial-gradient(1200px 700px at 80% -10%, rgba(124,92,255,.15), transparent 60%),
-                 radial-gradient(900px 500px at 10% 10%, rgba(61,214,255,.12), transparent 60%),
-                 linear-gradient(180deg,var(--bg1),var(--bg2));
-      color:var(--text);
-      line-height:1.6;
-      overflow-x:hidden;
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; color: var(--text); background: radial-gradient(1200px 700px at 10% -10%, rgba(103,232,249,.12), transparent 60%),
+                                             radial-gradient(1200px 700px at 90% 10%, rgba(167,139,250,.10), transparent 60%),
+                                             linear-gradient(180deg, var(--bg), var(--bg-soft));
+      font-family: var(--sans);
+      line-height: 1.6;
+      letter-spacing: .2px;
     }
 
-    .container{max-width:1180px;margin:0 auto;padding:32px 20px;}
+    /* Header */
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(18,26,37,.92), rgba(18,26,37,.75));
+      border-bottom: 1px solid rgba(103,232,249,.18);
+    }
+    .nav {
+      max-width: 1100px; margin: 0 auto; padding: 14px 18px;
+      display: flex; gap: 16px; align-items: center; justify-content: space-between;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text);
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 18px var(--brand); }
+    .brand h1 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: .8px; }
+    .nav a { color: var(--muted); text-decoration: none; font-size: 14px; padding: 6px 10px; border-radius: 8px; }
+    .nav a:hover { color: var(--text); background: rgba(103,232,249,.08); }
 
-    header.hero{padding:64px 0 32px;text-align:center;border-bottom:var(--border);}
-    header.hero h1{font-weight:800;font-size:clamp(28px,3vw,40px);background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-    header.hero p{color:var(--muted);margin-top:10px;}
+    /* Hero */
+    .hero { max-width: 1100px; margin: 28px auto 12px; padding: 0 18px; }
+    .badge-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .badge { font-family: var(--mono); font-size: 12px; color: var(--text); padding: 6px 10px; border-radius: 999px; border: 1px solid var(--outline); background: rgba(103,232,249,.06); }
+    .title { font-size: clamp(28px, 4vw, 40px); margin: 10px 0 6px; font-weight: 800; letter-spacing: .3px; }
+    .meta { color: var(--muted); font-size: 14px; }
+    .meta b { color: var(--text); }
 
-    main{padding:50px 0;}
-    section{margin-bottom:80px;}
+    /* Grid */
+    .grid { max-width: 1100px; margin: 18px auto; padding: 0 18px; display: grid; grid-template-columns: 1fr; gap: 16px; }
+    @media (min-width: 900px){ .grid { grid-template-columns: 1fr 1fr; } }
 
-    h2{font-size:1.8rem;margin-bottom:18px;border-left:4px solid var(--accent2);padding-left:10px;}
+    .card {
+      background: linear-gradient(180deg, rgba(18,26,37,.9), rgba(12,18,27,.9));
+      border: 1px solid rgba(103,232,249,.15);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .card h3 { margin: 0 0 10px; font-size: 18px; letter-spacing: .3px; }
+    .card p { margin: 0 0 12px; color: var(--muted); }
 
-    /* LEVELS */
-    .levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:28px;}
-    .card{position:relative;background:rgba(255,255,255,.02);border:var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);transition:all 0.35s ease;cursor:pointer;}
-    .card::before{content:"";position:absolute;inset:-2px;border-radius:inherit;background:linear-gradient(135deg,rgba(124,92,255,.25),rgba(61,214,255,.12));z-index:-1;filter:blur(14px);transition:opacity 0.4s ease;opacity:0;}
-    .card:hover::before{opacity:1;}
-    .card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.45);}
-    .badge{display:inline-block;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.06);border:var(--border);color:var(--muted);font-weight:600;margin-bottom:10px;}
-    .card h3{margin-bottom:8px;}
-    .pts{color:var(--muted);font-weight:600;margin-bottom:10px;}
-    .perk-list{margin:10px 0 0 18px;}
-    .perk-list li{margin:6px 0;}
+    .kicker { color: var(--brand); font-weight: 700; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
 
-    /* COMMANDS */
-    .command-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;}
-    .panel{background:rgba(255,255,255,.03);border:var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);transition:all 0.3s ease;}
-    .panel:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.4);}
-    .panel h3{margin-bottom:8px;}
-    .kbd{display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:2px 8px;font-family:monospace;font-size:.9rem;color:var(--accent2);}
+    /* Commands list */
+    .cmd { display: grid; grid-template-columns: 1fr auto; gap: 6px 10px; align-items: center; padding: 10px; border-radius: 12px; background: rgba(103,232,249,.06); border: 1px solid rgba(103,232,249,.12); margin: 8px 0; }
+    .cmd .name { font-family: var(--mono); color: var(--text); }
+    .cmd .desc { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
+    .copy { appearance: none; border: 1px solid rgba(103,232,249,.25); background: rgba(103,232,249,.08); color: var(--text); border-radius: 8px; padding: 6px 10px; font-size: 12px; cursor: pointer; }
+    .copy:hover { background: rgba(103,232,249,.15); }
 
-    footer{text-align:center;padding:40px 0;border-top:var(--border);color:var(--muted);background:rgba(0,0,0,.3);backdrop-filter:blur(8px);}
+    /* Accordion */
+    details { border: 1px solid rgba(103,232,249,.15); border-radius: 12px; background: rgba(18,26,37,.7); padding: 12px 14px; margin: 10px 0; }
+    details[open] { background: rgba(18,26,37,.9); }
+    summary { cursor: pointer; list-style: none; }
+    summary::-webkit-details-marker { display: none }
+    summary { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .sum { display: flex; align-items: baseline; gap: 10px; }
+    .sum b { font-size: 14px; }
+    .sum small { color: var(--muted); }
+
+    /* Footer */
+    footer { max-width: 1100px; margin: 20px auto 60px; padding: 0 18px; color: var(--muted); font-size: 13px; }
+    .sep { height: 1px; background: linear-gradient(90deg, rgba(103,232,249,.2), rgba(167,139,250,.1), transparent); margin: 24px 0; }
+    .muted { color: var(--muted); }
+    .ok { color: var(--ok); }
+    .danger { color: var(--danger); }
+    .chip { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; border: 1px solid rgba(103,232,249,.25); background: rgba(103,232,249,.06); }
+    .mono { font-family: var(--mono); }
+    code.inline { background: rgba(103,232,249,.08); border: 1px solid rgba(103,232,249,.18); padding: 2px 6px; border-radius: 6px; }
+    a.link { color: var(--brand); text-decoration: none; }
+    a.link:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="container">
-      <h1>ASTERION Concord α</h1>
-      <p>Партнёрский портал: уровни, привилегии, команды и обратная связь</p>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="nav">
+      <a class="brand" href="#top" aria-label="ASTERION ConCord Home">
+        <span class="dot" aria-hidden="true"></span>
+        <h1>ASTERION ConCord α</h1>
+      </a>
+      <nav>
+        <a href="#changelog">Changelog</a>
+        <a href="#commands">Commands</a>
+        <a href="#roles">Role Permissions</a>
+        <a href="#levels">PTS & Levels</a>
+        <a href="#voice">Voice Tracking</a>
+        <a href="#about">About</a>
+      </nav>
     </div>
-  </header>
+  </div>
 
-  <main>
-    <div class="container">
-      <section id="levels">
-        <h2>Уровни партнёрства</h2>
-        <div class="levels">
-          <div class="card">
-            <span class="badge">LV.1 • Соратник</span>
-            <h3>Нарёкшийся другом</h3>
-            <div class="pts">Порог: <span class="kbd">8 000 pts</span></div>
-            <ul class="perk-list">
-              <li>Доступ к партнёрскому ивент-хабу ASTERION.</li>
-              <li>Проведение ивентов, конкурсов и розыгрышей.</li>
-              <li>Размещение ссылок и ресурсов в партнёрских каналах.</li>
-              <li>Карточка с прогрессом (уровень, PTS, проценты).</li>
-              <li>Бонусы за активность сообщества на ASTERION.</li>
-              <li>Обработка заявок — до 48 часов.</li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <span class="badge">LV.2 • Клеврет</span>
-            <h3>Верный товарищ</h3>
-            <div class="pts">Порог: <span class="kbd">20 000 pts</span> • Множитель: <span class="kbd">×1.25</span></div>
-            <ul class="perk-list">
-              <li>Приоритетная поддержка и обратная связь.</li>
-              <li>Приватные каналы и созвоны для партнёров.</li>
-              <li>Индивидуальные PTS-бусты по запросу куратора.</li>
-              <li>Коллаборативные посты и упоминания в медиа ASTERION.</li>
-              <li>Ранний доступ к тестам и обновлениям.</li>
-              <li>Кастомный множитель по согласованию.</li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <span class="badge">LV.3 • В завязке</span>
-            <h3>Брат по делу</h3>
-            <div class="pts">Порог: <span class="kbd">40 000 pts</span> • Пассив: <span class="kbd">×1.5</span></div>
-            <ul class="perk-list">
-              <li>Платиновая безопасность и защита от ложных банов.</li>
-              <li>Ежемесячные PTS-бустеры (10× при ивентах/апдейтах).</li>
-              <li>Участие в тестах продуктов ASTERION.</li>
-              <li>Помощь в брендинге и оформлении сервера.</li>
-              <li>Эксклюзивные материалы, аналитика и отчёты.</li>
-              <li>Доступ к встречам ASTERION Council.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section id="commands">
-        <h2>Команды</h2>
-        <div class="command-grid">
-          <div class="panel">
-            <h3>Основные</h3>
-            <p><span class="kbd">/partner_me</span> — Показ твоей карточки и уровня</p>
-            <p><span class="kbd">/partner_info name:&quot;ServerName&quot;</span> — Инфо о партнёре</p>
-            <p><span class="kbd">/partner_leaderboard</span> — Топ-10 партнёров</p>
-          </div>
-          <div class="panel">
-            <h3>Обратная связь</h3>
-            <p><span class="kbd">/feedback message:&quot;Текст&quot;</span> — Отправка отзыва</p>
-            <p>Репорты попадают в канал <span class="kbd">#partners-feedback</span></p>
-          </div>
-          <div class="panel">
-            <h3>Представители</h3>
-            <p><span class="kbd">/partner_addrep</span> — Добавить представителя</p>
-            <p><span class="kbd">/partner_reps</span> — Показать всех представителей</p>
-          </div>
-        </div>
-      </section>
+  <!-- Hero -->
+  <section class="hero" id="top">
+    <div class="badge-row" aria-label="version badges">
+      <span class="badge"><b>Closed Alpha</b> · <span class="mono">ver. 0.0.2α</span></span>
+      <span class="badge">ConCord α Patch <span class="mono">0.0.4a</span></span>
     </div>
-  </main>
+    <h2 class="title">ASTERION ConCord α — Patch <span class="mono">0.0.4a</span></h2>
+    <p class="meta">
+      <b>Author:</b> <b>[+]</b> <span class="mono">𝕾𝖔 𝕾1𝖈𝖐</span><br/>
+      <b>Description:</b> Introduces the ConcordConnect Role Layer, auto-PTS for messages & voice, levels & progress, and improved command sync.
+    </p>
+  </section>
 
-  <footer>© ASTERION Concord α · Партнёрская экосистема</footer>
+  <div class="grid">
+    <!-- Changelog -->
+    <article class="card" id="changelog">
+      <span class="kicker">Patch Notes / Changelog</span>
+      <h3>What’s new in <span class="mono">0.0.4a</span></h3>
+      <ul class="muted">
+        <li><b>ConcordConnect Role Layer:</b> separate <span class="chip">ADMIN_ROLE_IDS</span> vs <span class="chip">CONCORD_CONNECT_IDS</span> with cascading access (admins see all).</li>
+        <li><b>Auto PTS:</b> per-message and per-minute voice accrual on partner guilds.</li>
+        <li><b>Levels & Progress:</b> dynamic thresholds via <code class="inline">LEVELS_JSON</code>.</li>
+        <li><b>Slash autosync:</b> commands sync to ASTERION & Partner guilds at boot + partners from DB.</li>
+        <li><b>DB schema (stable):</b> <code class="inline">partners</code>, <code class="inline">partner_reps</code>, <code class="inline">partner_feedback</code>.</li>
+        <li><b>Better error UX:</b> clean ephemeral messages on permission checks.</li>
+      </ul>
+    </article>
+
+    <!-- Commands Overview -->
+    <article class="card" id="commands">
+      <span class="kicker">Commands Overview</span>
+      <h3>Slash Commands</h3>
+
+      <details open>
+        <summary>
+          <div class="sum"><b>Partner (ConCord)</b> <small>limited to <span class="chip">CONCORD_CONNECT_IDS</span> (admins included)</small></div>
+        </summary>
+        <div class="cmd"><div class="name">/partner_info <span class="muted">name:"ServerName"</span></div><button class="copy" data-copy="/partner_info name:&quot;ServerName&quot;">Copy</button><div class="desc">Show current partner status (level, PTS, guild link, next level progress).</div></div>
+        <div class="cmd"><div class="name">/partner_me</div><button class="copy" data-copy="/partner_me">Copy</button><div class="desc">Display your ConCord identity on this guild.</div></div>
+        <div class="cmd"><div class="name">/partner_reps <span class="muted">name:"ServerName"</span></div><button class="copy" data-copy="/partner_reps name:&quot;ServerName&quot;">Copy</button><div class="desc">List current representatives for the partner.</div></div>
+        <div class="cmd"><div class="name">/feedback <span class="muted">message:"..." partner_name:"ServerName"</span></div><button class="copy" data-copy="/feedback message:&quot;Great work&quot; partner_name:&quot;ServerName&quot;">Copy</button><div class="desc">Send feedback/report to ASTERION (#partners-feedback).</div></div>
+        <div class="cmd"><div class="name">/status</div><button class="copy" data-copy="/status">Copy</button><div class="desc">Quick health-check for ConCord on this guild.</div></div>
+        <div class="cmd"><div class="name">/partner_help</div><button class="copy" data-copy="/partner_help">Copy</button><div class="desc">Show available partner commands.</div></div>
+      </details>
+
+      <details>
+        <summary>
+          <div class="sum"><b>Admin (ASTERION)</b> <small>restricted to <span class="chip">ADMIN_ROLE_IDS</span></small></div>
+        </summary>
+        <div class="cmd"><div class="name">/partner_add <span class="muted">name:"ServerName" guild_id:"123"</span></div><button class="copy" data-copy="/partner_add name:&quot;ServerName&quot; guild_id:&quot;123&quot;">Copy</button><div class="desc">Register a partner and optionally link a Discord guild ID.</div></div>
+        <div class="cmd"><div class="name">/partner_remove <span class="muted">name:"ServerName"</span></div><button class="copy" data-copy="/partner_remove name:&quot;ServerName&quot;">Copy</button><div class="desc">Remove partner and all representatives.</div></div>
+        <div class="cmd"><div class="name">/partner_addrep <span class="muted">name:"ServerName" user:@member</span></div><button class="copy" data-copy="/partner_addrep name:&quot;ServerName&quot; user:@member">Copy</button><div class="desc">Add a representative (multi-rep allowed, unique per user).</div></div>
+        <div class="cmd"><div class="name">/addpts <span class="muted">partner:"ServerName" amount:100</span></div><button class="copy" data-copy="/addpts partner:&quot;ServerName&quot; amount:100">Copy</button><div class="desc">Manually grant PTS to partner.</div></div>
+        <div class="cmd"><div class="name">/setlevel <span class="muted">partner:"ServerName" level:2</span></div><button class="copy" data-copy="/setlevel partner:&quot;ServerName&quot; level:2">Copy</button><div class="desc">Force partner level to a specific value.</div></div>
+        <div class="cmd"><div class="name">/migrate</div><button class="copy" data-copy="/migrate">Copy</button><div class="desc">Ensure DB schema exists (safe to run multiple times).</div></div>
+        <div class="cmd"><div class="name">/partner_leaderboard</div><button class="copy" data-copy="/partner_leaderboard">Copy</button><div class="desc">Top partners by PTS (first 10).</div></div>
+      </details>
+    </article>
+
+    <!-- Role Permissions -->
+    <article class="card" id="roles">
+      <span class="kicker">Role Permissions</span>
+      <h3>Access Model</h3>
+      <p><b>Admins (ASTERION)</b> — full access to all admin & partner commands.
+        <br/><b>Partner Admins (ConCord)</b> — limited to informational and feedback commands.
+      </p>
+      <ul class="muted">
+        <li><b>ADMIN_ROLE_IDS</b> — can run: <code class="inline">/partner_add, /partner_remove, /partner_addrep, /addpts, /setlevel, /migrate, /partner_leaderboard</code> + all partner commands.</li>
+        <li><b>CONCORD_CONNECT_IDS</b> — can run: <code class="inline">/partner_info, /partner_me, /partner_reps, /feedback, /status, /partner_help</code>.</li>
+        <li>Admins implicitly pass partner checks.</li>
+      </ul>
+    </article>
+
+    <!-- PTS & Levels System -->
+    <article class="card" id="levels">
+      <span class="kicker">PTS & Levels System</span>
+      <h3>Scoring & Progress</h3>
+      <p class="muted">Thresholds are configurable via <code class="inline">LEVELS_JSON</code> in your <code class="inline">.env</code>. Default:</p>
+      <pre class="mono" style="background:rgba(16,24,36,.8); border:1px solid rgba(103,232,249,.18); padding:12px; border-radius:12px; overflow:auto;">
+{
+  "1": 8000,
+  "2": 20000,
+  "3": 40000
+}
+      </pre>
+      <p class="muted">Partners see current level, total PTS, and remaining PTS to the next level inside <code class="inline">/partner_info</code>.</p>
+    </article>
+
+    <!-- Auto Voice Activity Tracking -->
+    <article class="card" id="voice">
+      <span class="kicker">Auto Voice Activity Tracking</span>
+      <h3>How it accrues points</h3>
+      <ul class="muted">
+        <li>Every minute ConCord scans voice channels of each partner guild.</li>
+        <li>Counts human participants (bots ignored).</li>
+        <li>Adds <code class="inline">PTS_PER_VC_MINUTE × participants</code> to the partner’s PTS.</li>
+        <li>Message activity can also grant PTS with <code class="inline">PTS_PER_MESSAGE</code>.</li>
+      </ul>
+      <p class="muted">All values are configurable via <code class="inline">.env</code>.</p>
+    </article>
+
+    <!-- About ConCordConnect -->
+    <article class="card" id="about">
+      <span class="kicker">About ConCordConnect</span>
+      <h3>What is ConCordConnect?</h3>
+      <p class="muted">A secure role layer and telemetry bridge for ASTERION partners. It enforces least-privilege access for partner admins while giving ASTERION full operational control. ConCordConnect powers auto-PTS, feedback routing, and multi-guild command sync.</p>
+      <details>
+        <summary><div class="sum"><b>Environment Variables</b> <small>.env keys</small></div></summary>
+        <ul class="muted">
+          <li><code class="inline">DISCORD_TOKEN</code> / <code class="inline">TOKEN</code></li>
+          <li><code class="inline">GUILD_ID</code> (ASTERION)</li>
+          <li><code class="inline">PARTNER_GUILD_ID</code></li>
+          <li><code class="inline">ADMIN_ROLE_IDS</code>, <code class="inline">CONCORD_CONNECT_IDS</code></li>
+          <li><code class="inline">PARTNERS_DB</code></li>
+          <li><code class="inline">PTS_PER_MESSAGE</code>, <code class="inline">PTS_PER_VC_MINUTE</code></li>
+          <li><code class="inline">LEVELS_JSON</code></li>
+        </ul>
+      </details>
+    </article>
+  </div>
+
+  <footer>
+    <div class="sep"></div>
+    <p class="muted">© ASTERION · ConCord α · Patch <span class="mono">0.0.4a</span>. Built for partners in closed alpha.</p>
+  </footer>
+
+  <script>
+    // Copy buttons for commands
+    document.querySelectorAll('[data-copy]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-copy');
+        navigator.clipboard.writeText(text).then(() => {
+          const prev = btn.textContent;
+          btn.textContent = 'Copied';
+          btn.disabled = true;
+          setTimeout(() => { btn.textContent = 'Copy'; btn.disabled = false; }, 1000);
+        });
+      });
+    });
+  </script>
 </body>
 </html>
